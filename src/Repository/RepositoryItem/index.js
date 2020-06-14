@@ -14,6 +14,38 @@ const VIEWER_SUBSCRIPTIONS = {
 
 const isWatch = (viewerSubscription) => viewerSubscription === VIEWER_SUBSCRIPTIONS.SUBSCRIBED;
 
+const updateWatch = (
+  client,
+  {
+    data: {
+      updateSubscription: {
+        subscribable: { id, viewerSubscription },
+      },
+    },
+  },
+) => {
+  const repository = client.readFragment({
+    id: `Repository:${id}`,
+    fragment: REPOSITORY_FRAGMENT,
+  });
+
+  let { totalCount } = repository.watchers;
+  totalCount =
+    viewerSubscription === VIEWER_SUBSCRIPTIONS.SUBSCRIBED ? totalCount + 1 : totalCount - 1;
+
+  client.writeFragment({
+    id: `Repository:${id}`,
+    fragment: REPOSITORY_FRAGMENT,
+    data: {
+      ...repository,
+      watchers: {
+        ...repository.watchers,
+        totalCount,
+      },
+    },
+  });
+};
+
 // This function has access to the Apollo Client and the mutation result in its arguments.
 const updateAddStar = (
   client,
@@ -87,6 +119,7 @@ const RepositoryItem = ({
       <div>
         <Mutation
           mutation={WATCH_REPOSITORY}
+          update={updateWatch}
           variables={{
             id,
             viewerSubscription: isWatch(viewerSubscription)
