@@ -120,6 +120,18 @@ const RepositoryItem = ({
         <Mutation
           mutation={WATCH_REPOSITORY}
           update={updateWatch}
+          optimisticResponse={{
+            updateSubscription: {
+              __typename: 'Mutation',
+              subscribable: {
+                __typename: 'Repository',
+                id,
+                viewerSubscription: isWatch(viewerSubscription)
+                  ? VIEWER_SUBSCRIPTIONS.UNSUBSCRIBED
+                  : VIEWER_SUBSCRIPTIONS.SUBSCRIBED,
+              },
+            },
+          }}
           variables={{
             id,
             viewerSubscription: isWatch(viewerSubscription)
@@ -138,7 +150,21 @@ const RepositoryItem = ({
           )}
         </Mutation>
         {!viewerHasStarred ? (
-          <Mutation mutation={STAR_REPOSITORY} update={updateAddStar} variables={{ id }}>
+          <Mutation
+            mutation={STAR_REPOSITORY}
+            update={updateAddStar}
+            optimisticResponse={{
+              addStar: {
+                __typename: 'Mutation',
+                starrable: {
+                  __typename: 'Repository',
+                  id,
+                  viewerHasStarred: !viewerHasStarred,
+                },
+              },
+            }}
+            variables={{ id }}
+          >
             {(addStar, { data, loading, error }) => (
               <Button className={'RepositoryItem-title-action'} onClick={addStar}>
                 {stargazers.totalCount} Star
@@ -146,7 +172,21 @@ const RepositoryItem = ({
             )}
           </Mutation>
         ) : (
-          <Mutation mutation={UNSTAR_REPOSITORY} update={updateRemoveStar} variables={{ id }}>
+          <Mutation
+            mutation={UNSTAR_REPOSITORY}
+            update={updateRemoveStar}
+            optimisticResponse={{
+              removeStar: {
+                __typename: 'Mutation',
+                starrable: {
+                  __typename: 'Repository',
+                  id,
+                  viewerHasStarred: !viewerHasStarred,
+                },
+              },
+            }}
+            variables={{ id }}
+          >
             {(removeStar, { data, loading, error }) => (
               <Button className='RepositoryItem-title-action' onClick={removeStar}>
                 {stargazers.totalCount} Unstar
