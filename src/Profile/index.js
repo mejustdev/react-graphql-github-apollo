@@ -9,7 +9,7 @@ import ErrorMessage from '../Error';
 const GET_REPOSITORIES_OF_CURRENT_USER = gql`
   query($cursor: String) {
     viewer {
-      repositories(first: 1, orderBy: { direction: DESC, field: STARGAZERS }, after: $cursor) {
+      repositories(first: 2, orderBy: { direction: DESC, field: STARGAZERS }, after: $cursor) {
         edges {
           node {
             ...repository
@@ -28,20 +28,20 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
 const Profile = () => (
   <Query query={GET_REPOSITORIES_OF_CURRENT_USER} notifyOnNetworkStatusChange={true}>
     {({ data, loading, error, fetchMore }) => {
-      // const { viewer } = data;
+      const { viewer } = data ? data : false; // First data is undefined(default).It is necessary
       // console.log(viewer);
       if (error) {
         return <ErrorMessage error={error} />;
       }
 
-      if (loading && !data.viewer) {
+      if (loading && !viewer) {
         return <Loading />;
       }
 
       return (
         <RepositoryList
           loading={loading}
-          repositories={data.viewer.repositories}
+          repositories={viewer.repositories}
           fetchMore={fetchMore}
         />
       );
