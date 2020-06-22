@@ -10,9 +10,9 @@ import { ButtonUnobtrusive } from '../../Button';
 import './style.css';
 
 const GET_ISSUES_OF_REPOSITORY = gql`
-  query($repositoryOwner: String!, $repositoryName: String!) {
+  query($repositoryOwner: String!, $repositoryName: String!, $issueState: IssueState!) {
     repository(name: $repositoryName, owner: $repositoryOwner) {
-      issues(first: 5) {
+      issues(first: 5, states: [$issueState]) {
         edges {
           node {
             id
@@ -46,7 +46,7 @@ const TRANSITION_STATE = {
   [ISSUE_STATES.CLOSED]: ISSUE_STATES.NONE,
 };
 
-const Issues = (props) => {
+const Issues = ({ repositoryOwner, repositoryName }) => {
   const [issueState, setIssueState] = useState(ISSUE_STATES.NONE);
 
   const isShow = (issueState) => issueState !== ISSUE_STATES.NONE;
@@ -55,7 +55,6 @@ const Issues = (props) => {
     setIssueState(nextIssueState);
   };
 
-  const { repositoryOwner, repositoryName } = props;
   return (
     <div className='Issues'>
       <ButtonUnobtrusive onClick={() => onChangeIssueState(TRANSITION_STATE[issueState])}>
@@ -68,6 +67,7 @@ const Issues = (props) => {
           variables={{
             repositoryOwner,
             repositoryName,
+            issueState,
           }}
         >
           {({ data, loading, error }) => {
@@ -81,17 +81,7 @@ const Issues = (props) => {
               return <Loading />;
             }
 
-            const filteredRepository = {
-              issues: {
-                edges: repository.issues.edges.filter((issue) => issue.node.state === issueState),
-              },
-            };
-
-            if (!filteredRepository.issues.edges.length) {
-              return <div className='IssueList'>No issues ...</div>;
-            }
-
-            return <IssueList issues={filteredRepository.issues} />;
+            return <IssueList issues={repository.issues} />;
           }}
         </Query>
       )}
