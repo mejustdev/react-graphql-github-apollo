@@ -144,7 +144,12 @@ const IssueFilter = ({ repositoryOwner, repositoryName, issueState, onChangeIssu
 const IssueList = ({ issues, loading, repositoryOwner, repositoryName, issueState, fetchMore }) => (
   <div className='IssueList'>
     {issues.edges.map(({ node }) => (
-      <IssueItem key={node.id} issue={node} />
+      <IssueItem
+        key={node.id}
+        issue={node}
+        repositoryOwner={repositoryOwner}
+        repositoryName={repositoryName}
+      />
     ))}
     <FetchMore
       loading={loading}
