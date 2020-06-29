@@ -3,6 +3,8 @@ import { Query } from 'react-apollo';
 
 import { GET_COMMENTS_OF_ISSUE } from './queries';
 import CommentItem from '../CommentItem';
+import CommentAdd from '../CommentAdd';
+
 import Loading from '../../Loading';
 import ErrorMessage from '../../Error';
 import FetchMore from '../../FetchMore';
@@ -49,7 +51,7 @@ const Comments = ({ repositoryOwner, repositoryName, issue }) => (
         return <ErrorMessage error={error} />;
       }
 
-      const { repository } = data;
+      const { repository } = data ? data : false;
 
       if (loading && !repository) {
         return <Loading />;
@@ -63,9 +65,10 @@ const Comments = ({ repositoryOwner, repositoryName, issue }) => (
             number={issue.number}
             repositoryOwner={repositoryOwner}
             repositoryName={repositoryName}
-            updateQuery={updateQuery}
             fetchMore={fetchMore}
           />
+
+          <CommentAdd issueId={repository.issue.id} />
         </Fragment>
       );
     }}
@@ -87,6 +90,7 @@ const CommentList = ({ comments, loading, repositoryOwner, repositoryName, numbe
         repositoryName,
         number,
       }}
+      updateQuery={updateQuery}
       fetchMore={fetchMore}
     >
       Comments
