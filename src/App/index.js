@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Profile from '../Profile';
 import Organization from '../Organization';
 import Navigation from './Navigation/index';
+import Footer from './Footer';
+
+import './style.css';
 
 import * as routes from '../constants/routes';
 class App extends Component {
@@ -43,6 +46,7 @@ class App extends Component {
               )}
             />
           </div>
+          <Footer />
         </div>
       </Router>
     );
