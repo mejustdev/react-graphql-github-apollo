@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/react-graphql-github-apollo/static/css/main.80dd43f4.chunk.css",
+    "main.js": "/react-graphql-github-apollo/static/js/main.3bdc18af.chunk.js",
+    "main.js.map": "/react-graphql-github-apollo/static/js/main.3bdc18af.chunk.js.map",
+    "runtime-main.js": "/react-graphql-github-apollo/static/js/runtime-main.cd3e0421.js",
+    "runtime-main.js.map": "/react-graphql-github-apollo/static/js/runtime-main.cd3e0421.js.map",
+    "static/js/2.49275a19.chunk.js": "/react-graphql-github-apollo/static/js/2.49275a19.chunk.js",
+    "static/js/2.49275a19.chunk.js.map": "/react-graphql-github-apollo/static/js/2.49275a19.chunk.js.map",
+    "index.html": "/react-graphql-github-apollo/index.html",
+    "precache-manifest.8b699b72b9bb50f13662fee8121c0f9a.js": "/react-graphql-github-apollo/precache-manifest.8b699b72b9bb50f13662fee8121c0f9a.js",
+    "service-worker.js": "/react-graphql-github-apollo/service-worker.js",
+    "static/css/main.80dd43f4.chunk.css.map": "/react-graphql-github-apollo/static/css/main.80dd43f4.chunk.css.map",
+    "static/js/2.49275a19.chunk.js.LICENSE.txt": "/react-graphql-github-apollo/static/js/2.49275a19.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cd3e0421.js",
+    "static/js/2.49275a19.chunk.js",
+    "static/css/main.80dd43f4.chunk.css",
+    "static/js/main.3bdc18af.chunk.js"
+  ]
+}
