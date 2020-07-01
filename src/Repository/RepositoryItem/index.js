@@ -195,8 +195,6 @@ const RepositoryItem = ({
           </Mutation>
         )}
       </div>
-
-      <div className='RepositoryItem-title-action'>{stargazers.totalCount} Stars</div>
     </div>
 
     <div className='RepositoryItem-description'>
