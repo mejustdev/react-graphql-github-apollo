@@ -16,7 +16,7 @@
 
 ## Installation
 
-* `https://github.com/Mehmet-Ergorgec/react-graphql-github-apollo.git`
+* Clone this repository
 * cd react-graphql-github-apollo
 * add your own [GitHub personal access token](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/) in a .env file in your root folder
   * scopes/permissions you need to check: admin:org, repo, user, notifications
